@@ -1,0 +1,41 @@
+- name: Install python Flask app
+  hosts: web-servers
+  become: true
+
+  tasks:
+    # copy the app to the remote server
+    - name: Copy app to the remote server
+      tags: copy 
+      copy:
+        src: webhook.py
+        dest: /home/webhook.py
+
+    # install python3-pip and python3-venv
+    - name: Install python3-pip python3-venv
+      tags: install
+      package:
+        name: 
+          - python3-pip
+          - python3-venv
+        update_cache: yes
+        state: latest
+    
+    # create a virtual environment
+    - name: Create a virtual environment
+      tags: venv
+      command: python3 -m venv /home/.venv
+      args:
+        creates: /home/.venv
+
+    # stop any process which runs on port 5000
+    - name: Stop any process which runs on port 5000
+      tags: stop
+      shell: fuser -k 5000/tcp || true
+      ignore_errors: yes
+    
+    - name: Activate and run application
+      tags: start, flask
+      shell: |
+        . /home/.venv/bin/activate
+        pip install flask requests
+        nohup python3 /home/webhook.py  > /home/log.txt 2>&1 &

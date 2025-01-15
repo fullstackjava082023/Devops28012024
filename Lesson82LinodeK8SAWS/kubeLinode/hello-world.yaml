@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world-pod
+  namespace: test
+spec:
+  containers:
+    - name: hello-world
+      image: shashkist/docker-hello-test:1.1
