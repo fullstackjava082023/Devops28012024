@@ -14,5 +14,5 @@ spec:
         - "-d300s"
         - "-H"
         - "Connection: Close"
-        - "http://flask-app-service:5053/viewContacts"
+        - "http://flask-app-service:5052/viewContacts"
       restartPolicy: Never

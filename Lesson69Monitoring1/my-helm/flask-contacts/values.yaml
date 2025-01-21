@@ -13,7 +13,8 @@ service:
 
 
 database:
-  type: MYSQL
+  # This sets the database type supported values are: MYSQL, MONGO - uncomment and add value to use.
+  # type: 
 
 
 

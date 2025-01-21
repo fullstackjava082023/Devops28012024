@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-contacts-app
+  labels:
+    app: flask-contacts-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-contacts-app
+  template:
+    metadata:
+      labels:
+        app: flask-contacts-app
+    spec:
+      volumes:
+      - name: static-files-volume
+        persistentVolumeClaim:
+          claimName: static-files-pvc
+      containers:
+      - name: flask-contacts-app
+        image: shashkist/flask-contacts-app:1.4
+        ports:
+        - containerPort: 5052
+        volumeMounts:
+        - name: static-files-volume
+          mountPath: /app/static/images
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: flask-mysql-config
+              key: db_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-contacts-app-service
+spec:
+  selector:
+    app: flask-contacts-app
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5053
+      targetPort: 5052
+       
+       

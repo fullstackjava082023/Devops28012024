@@ -5,6 +5,6 @@ metadata:
 data:
   DATABASE_TYPE: MONGO
   MONGO_URI: mongodb://mongo-service:27017/
-  MONGO_HOST: mongo-service.
+  MONGO_HOST: mongo-service
   # multiline text
   
