@@ -1,0 +1,5 @@
+.venv
+.cfg
+.vagrant
+.terraform
+variables.tf
