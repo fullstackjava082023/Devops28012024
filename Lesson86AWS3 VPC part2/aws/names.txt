@@ -1,0 +1,5 @@
+account id = 590183884095
+region = us-east1
+user = instructor
+user group = admins
+id of instructor user = https://590183884095.signin.aws.amazon.com/console
